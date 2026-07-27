@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+</head>
+<style>
+html{
+  color: white;
+  background-color: rgb(21,21,21);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  border-color: white;
+}
+#align{
+  text-align: center;
+}
+button{
+  color: inherit;
+  font-size: 12px;
+  height: 35px;
+  border: 1px solid currentColor;
+  border-radius: 10px;
+  background-color: transparent;
+}
+textarea{
+  color: inherit;
+  font-size: 12px;
+  width: 250px;
+  height: 50px;
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  background-color: transparent;
+}
+#mode{
+  width: 30px;
+  height: 30px;
+}
+</style>
+<body>
+  <button id="mode" onclick="theme()">☾</button>
+  <br>
+  <div id="align">
+  <h1>랜덤한 사람 엮기</h1><br>
+  <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+  <h6>남자</h6>
+  <textarea id="people"></textarea>
+  </div>
+  <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+  <h6>여자</h6>
+  <textarea id="people2"></textarea>
+  </div>
+  <div id="result">여기에 결과가 표시됩니다.</div><br>
+  <button style="width:200px;margin-bottom: 5px" class="botBtn" id="default">기본</button>
+  <button style="width:200px;margin-bottom: 5px" class="botBtn" id="mix">엮기</button>
+  <button style="width:200px;margin-bottom: 5px" class="botBtn" id="reset">리셋</button>
+  </div>
+  <script>
+  let people;
+  let people2;
+  let display = document.getElementById("result");
+  let p1, p2;
+  let themes = 0;
+  let html = document.querySelector("html");
+  let mode = document.getElementById("mode");
+  function start(){
+    people = document.getElementById("people").value;
+    people2 = document.getElementById("people2").value;
+    if(people == ""){alert("남자를 입력해주세요."); return 0;}
+    if(people2 == ""){alert("여자를 입력해주세요."); return 0;}
+    people = people.split(" ")
+    people2 = people2.split(" ")
+    /*
+    if((people + people2).includes("고예찬")){
+      alert("이게 어디서")
+      location.reload()
+    }*/
+    p1 = people[Math.floor(Math.random() * people.length)];
+    p2 = people2[Math.floor(Math.random() * people2.length)];
+    if(p1 === p2){
+      start();
+    }
+    else{
+      display.textContent = `${p1} ${p2}`
+    }
+  }
+  function reset(){
+    people = document.getElementById("people").value;
+    people2 = document.getElementById("people2").value;
+    document.getElementById("people").value = "김시혁 김태연 김주원 이지후"
+    document.getElementById("people2").value = "최은수 강지아 최수아"
+  }
+  function theme(){
+    if(themes == 0){
+      themes = 1;
+      html.style.color = "black";
+      html.style.backgroundColor = "white";
+      mode.textContent = "☀";
+    }else{
+      themes = 0;
+      html.style.color = "white";
+      html.style.backgroundColor = "rgb(21,21,21)";
+      mode.textContent = "☾";
+    }
+  }
+  document.getElementById("mix").addEventListener("click", () => {
+    start();
+  });
+  document.getElementById("reset").addEventListener("click", () => {
+    location.reload();
+  });
+  document.getElementById("default").addEventListener("click", () => {
+    reset();
+  });
+  
+  reset()
+  /*
+  setInterval(() => {
+    start()
+  }, 1000);*/
+  </script>
+</body>
+</html>
